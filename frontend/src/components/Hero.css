@@ -1,0 +1,101 @@
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+            var(--color-gray-900) 0%,
+            var(--color-black) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--space-8);
+    max-width: 1200px;
+    transition: transform 0.1s ease-out;
+}
+
+.hero-tag {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-6);
+    backdrop-filter: blur(10px);
+}
+
+.hero-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-family: 'Bebas Neue', var(--font-display);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+    line-height: 1;
+    letter-spacing: 0.02em;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-weight: 300;
+    color: var(--color-gray-300);
+    margin-bottom: var(--space-6);
+    line-height: 1.4;
+}
+
+.hero-subtitle .highlight {
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--color-white) 0%, var(--color-gray-400) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: var(--text-lg);
+    color: var(--color-gray-400);
+    max-width: 700px;
+    margin: 0 auto var(--space-10);
+    line-height: 1.8;
+}
+
+.hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-16);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .hero-tag {
+        font-size: var(--text-xs);
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+    }
+
+    .hero-description {
+        font-size: var(--text-base);
+    }
+}
