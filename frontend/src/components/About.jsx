@@ -99,16 +99,16 @@ const About = () => {
                         </div>
                         <div className="stats-grid">
                             <div className="stat-item">
-                                <span className="stat-number">50+</span>
-                                <span className="stat-label">Projects</span>
+                                <span className="stat-number">31</span>
+                                <span className="stat-label">GitHub Repositories</span>
                             </div>
                             <div className="stat-item">
                                 <span className="stat-number">3+</span>
                                 <span className="stat-label">Years Experience</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">100+</span>
-                                <span className="stat-label">GitHub Stars</span>
+                                <span className="stat-number">4</span>
+                                <span className="stat-label">Total GitHub Stars</span>
                             </div>
                         </div>
                     </motion.div>

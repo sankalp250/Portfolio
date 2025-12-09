@@ -109,7 +109,7 @@ const Contact = () => {
                     animate={isInView ? { opacity: 1 } : {}}
                     transition={{ delay: 0.6 }}
                 >
-                    <p>© 2024 Sankalp Singh. Built with React, Three.js & Framer Motion.</p>
+                    <p>Created by Sankalp Singh. Built with React, Three.js & Framer Motion.</p>
                 </motion.footer>
             </div>
         </div>
