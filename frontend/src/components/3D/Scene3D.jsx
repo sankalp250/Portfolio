@@ -55,14 +55,14 @@ function ShootingStar({ delay = 0 }) {
 
     return (
         <Trail
-            width={0.5}
-            length={8}
-            color={new THREE.Color(2, 2, 2)}
+            width={0.15}
+            length={5}
+            color={new THREE.Color(0.8, 0.85, 1)}
             attenuation={(t) => t * t}
         >
             <mesh ref={ref} position={[(Math.random() - 0.5) * 4, Math.random() * 2 + 1, (Math.random() - 0.5) * 2]}>
-                <sphereGeometry args={[0.005, 8, 8]} />
-                <meshBasicMaterial color="#ffffff" />
+                <sphereGeometry args={[0.003, 8, 8]} />
+                <meshBasicMaterial color="#ffffcc" />
             </mesh>
         </Trail>
     );
@@ -94,17 +94,17 @@ function Comet({ delay = 0 }) {
 
     return (
         <Trail
-            width={0.8}
-            length={12}
-            color={new THREE.Color(1.5, 1.8, 2.5)}
+            width={0.25}
+            length={6}
+            color={new THREE.Color(0.6, 0.7, 0.9)}
             attenuation={(t) => {
                 const s = 1 - t;
                 return s * s;
             }}
         >
             <mesh ref={ref} position={[Math.random() * 3 - 1.5, Math.random() * 2 + 1.5, (Math.random() - 0.5) * 3]}>
-                <sphereGeometry args={[0.008, 8, 8]} />
-                <meshBasicMaterial color="#88ccff" />
+                <sphereGeometry args={[0.004, 8, 8]} />
+                <meshBasicMaterial color="#c8d5e8" />
             </mesh>
         </Trail>
     );

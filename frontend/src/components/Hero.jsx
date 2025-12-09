@@ -71,7 +71,7 @@ const Hero = () => {
                 </motion.p>
 
                 <motion.p className="hero-description" variants={itemVariants}>
-                    Specializing in NLP, Computer Vision, and cutting-edge AI technologies.
+                    Specializing in Gen AI, Machine Learning, Data Science, and Agentic AI.
                     <br />
                     Transforming complex problems into elegant solutions.
                 </motion.p>
@@ -85,15 +85,14 @@ const Hero = () => {
                     >
                         View Projects
                     </motion.button>
-                    <motion.a
-                        href="/resume.pdf"
-                        download="Sankalp_Singh_Resume.pdf"
+                    <motion.button
+                        onClick={() => window.open('https://drive.google.com/file/d/18RZVVpxatABZY07oXFVSC7AGaQBmg3O_/view?usp=sharing', '_blank')}
                         className="btn btn-secondary"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        📄 Download Resume
-                    </motion.a>
+                        📄 View Resume
+                    </motion.button>
                     <motion.button
                         className="btn btn-ghost"
                         whileHover={{ scale: 1.05 }}
