@@ -8,7 +8,7 @@ const About = () => {
     const isInView = useInView(ref, { once: true, margin: '-100px' });
 
     const skills = {
-        'Programming': ['C', 'Python', 'JavaScript'],
+        'Programming': ['C', 'Python'],
         'Cloud & Deployment': ['AWS', 'Render', 'Docker', 'Git', 'Power BI'],
         'Backend & APIs': ['FastAPI', 'Anaconda'],
         'Data Science & ML': ['NumPy', 'Pandas', 'Plotly', 'Seaborn', 'Tableau', 'mlflow'],

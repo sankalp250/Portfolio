@@ -14,12 +14,12 @@ const Contact = () => {
         },
         {
             name: 'LinkedIn',
-            url: 'https://linkedin.com/in/sankalp250',
+            url: 'https://www.linkedin.com/in/sankalp-singh-35b827250/',
             icon: '💼'
         },
         {
             name: 'Email',
-            url: 'mailto:sankalp@example.com',
+            url: 'mailto:sankalpsingh2595@gmail.com',
             icon: '📧'
         },
         {
@@ -30,7 +30,7 @@ const Contact = () => {
         },
         {
             name: 'Twitter',
-            url: 'https://twitter.com/sankalp250',
+            url: 'https://x.com/BunnySi79810067',
             icon: '🐦'
         }
     ];
