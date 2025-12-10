@@ -4,7 +4,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
 import GitHubStats from './components/GitHubStats';
-import Chatbot from './components/Chatbot';
+import ChatBot from './components/ChatBot';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
 import './index.css';
@@ -48,16 +48,17 @@ function App() {
           <section id="stats">
             <GitHubStats />
           </section>
-          <section id="chat">
-            <Chatbot />
-          </section>
           <section id="contact">
             <Contact />
           </section>
         </main>
+
+        {/* Floating AI Chat Widget */}
+        <ChatBot />
       </div>
     </Router>
   );
 }
 
 export default App;
+
