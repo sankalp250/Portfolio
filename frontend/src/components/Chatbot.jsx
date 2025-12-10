@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import robotAvatar from '../assets/robot-avatar.png';
 import './Chatbot.css';
 
 const API_BASE_URL = 'http://localhost:8000';
@@ -119,7 +120,7 @@ const ChatBot = () => {
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             >
-                {isOpen ? '✕' : '⭐'}
+                {isOpen ? '✕' : <img src={robotAvatar} alt="AI" style={{ width: '32px', height: '32px' }} />}
             </motion.button>
 
             {/* Chat Window */}
@@ -135,7 +136,9 @@ const ChatBot = () => {
                         {/* Chat Header */}
                         <div className="chat-header">
                             <div className="chat-header-content">
-                                <div className="chat-avatar-header">⭐</div>
+                                <div className="chat-avatar-header">
+                                    <img src={robotAvatar} alt="AI" style={{ width: '35px', height: '35px', borderRadius: '50%' }} />
+                                </div>
                                 <div>
                                     <h3>AI Assistant</h3>
                                     <p className="chat-status">
@@ -164,7 +167,9 @@ const ChatBot = () => {
                         <div className="chat-messages">
                             {messages.length === 0 ? (
                                 <div className="chat-welcome">
-                                    <div className="welcome-icon">⭐</div>
+                                    <div className="welcome-icon">
+                                        <img src={robotAvatar} alt="AI" style={{ width: '80px', height: '80px' }} />
+                                    </div>
                                     <h4>Hi! I'm your AI assistant</h4>
                                     <p>Ask me anything about Sankalp's projects, skills, and experience!</p>
 
@@ -194,7 +199,7 @@ const ChatBot = () => {
                                             transition={{ delay: idx * 0.05 }}
                                         >
                                             <div className="message-avatar">
-                                                {message.role === 'user' ? '👤' : '⭐'}
+                                                {message.role === 'user' ? '👤' : <img src={robotAvatar} alt="AI" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />}
                                             </div>
                                             <div className="message-content">
                                                 <div className="message-text">{message.content}</div>
@@ -210,7 +215,9 @@ const ChatBot = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    <div className="message-avatar">⭐</div>
+                                    <div className="message-avatar">
+                                        <img src={robotAvatar} alt="AI" style={{ width: '32px', height: '32px', borderRadius: '50%' }} />
+                                    </div>
                                     <div className="message-content">
                                         <div className="typing-indicator">
                                             <span></span>

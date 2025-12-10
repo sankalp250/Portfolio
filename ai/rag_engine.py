@@ -11,6 +11,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 import config
+import PyPDF2
 
 class RAGEngine:
     """RAG-based chatbot engine"""
@@ -91,6 +92,28 @@ class RAGEngine:
             metadata={"type": "personal_info"}
         )
         documents.append(personal_doc)
+        
+        # Add resume content
+        try:
+            resume_path = "Sankalp_Singh_resume.pdf"
+            if os.path.exists(resume_path):
+                with open(resume_path, 'rb') as file:
+                    pdf_reader = PyPDF2.PdfReader(file)
+                    resume_text = ""
+                    for page in pdf_reader.pages:
+                        resume_text += page.extract_text() + "\n"
+                    
+                    resume_doc = Document(
+                        page_content=f"""
+                        RESUME CONTENT:
+                        {resume_text}
+                        """,
+                        metadata={"type": "resume", "source": "Sankalp_Singh_resume.pdf"}
+                    )
+                    documents.append(resume_doc)
+                    print(f"✅ Added resume to knowledge base")
+        except Exception as e:
+            print(f"⚠️ Could not load resume: {e}")
         
         # If we have documents, create vector store
         if documents:
