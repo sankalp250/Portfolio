@@ -60,21 +60,31 @@ async def startup_event():
         print("🚀 Initializing RAG Engine...")
         rag_engine = RAGEngine(use_groq=True)
         
-        # Load GitHub repositories for knowledge base
-        print("📚 Loading GitHub repositories...")
-        github = GitHubAPI()
-        repos = github.get_repositories()
+        # Try to load GitHub repositories for knowledge base
+        try:
+            print("📚 Loading GitHub repositories...")
+            github = GitHubAPI()
+            repos = github.get_repositories()
+            
+            if repos:
+                rag_engine.initialize_knowledge_base(repos)
+                print(f"✅ Knowledge base initialized with {len(repos)} repositories")
+            else:
+                print("⚠️ No repositories found, initializing with personal info only...")
+                rag_engine.initialize_knowledge_base()
+        except Exception as github_error:
+            print(f"⚠️ GitHub loading failed: {github_error}")
+            print("Initializing with personal info only...")
+            rag_engine.initialize_knowledge_base()
         
-        if repos:
-            rag_engine.initialize_knowledge_base(repos)
-            is_initialized = True
-            print(f"✅ Knowledge base initialized with {len(repos)} repositories")
-        else:
-            print("⚠️ No repositories found, but RAG engine is ready")
-            is_initialized = True
+        is_initialized = True
+        print("✅ RAG Engine ready!")
             
     except Exception as e:
         print(f"❌ Error initializing RAG engine: {e}")
+        print(f"Error type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
         # Don't fail startup, but mark as not initialized
         is_initialized = False
 

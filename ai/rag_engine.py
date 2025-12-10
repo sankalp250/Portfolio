@@ -44,36 +44,37 @@ class RAGEngine:
         self.vector_store = None
         self.is_initialized = False
     
-    def initialize_knowledge_base(self, repos):
+    def initialize_knowledge_base(self, repos=None):
         """Initialize vector store with repository data"""
         if self.is_initialized:
             return
         
         documents = []
         
-        # Create documents from repositories
-        for repo in repos:
-            content = f"""
-            Project: {repo.get('name', '')}
-            Description: {repo.get('description', 'No description')}
-            Language: {repo.get('language', 'N/A')}
-            Stars: {repo.get('stargazers_count', 0)}
-            Forks: {repo.get('forks_count', 0)}
-            Topics: {', '.join(repo.get('topics', []))}
-            Created: {repo.get('created_at', '')[:10]}
-            Updated: {repo.get('updated_at', '')[:10]}
-            URL: {repo.get('html_url', '')}
-            """
-            
-            doc = Document(
-                page_content=content,
-                metadata={
-                    "name": repo.get('name', ''),
-                    "url": repo.get('html_url', ''),
-                    "language": repo.get('language', '')
-                }
-            )
-            documents.append(doc)
+        # Create documents from repositories if provided
+        if repos:
+            for repo in repos:
+                content = f"""
+                Project: {repo.get('name', '')}
+                Description: {repo.get('description', 'No description')}
+                Language: {repo.get('language', 'N/A')}
+                Stars: {repo.get('stargazers_count', 0)}
+                Forks: {repo.get('forks_count', 0)}
+                Topics: {', '.join(repo.get('topics', []))}
+                Created: {repo.get('created_at', '')[:10]}
+                Updated: {repo.get('updated_at', '')[:10]}
+                URL: {repo.get('html_url', '')}
+                """
+                
+                doc = Document(
+                    page_content=content,
+                    metadata={
+                        "name": repo.get('name', ''),
+                        "url": repo.get('html_url', ''),
+                        "language": repo.get('language', '')
+                    }
+                )
+                documents.append(doc)
         
         # Add personal information
         personal_doc = Document(
@@ -82,24 +83,30 @@ class RAGEngine:
             Title: {config.PERSONAL_INFO['title']}
             Bio: {config.PERSONAL_INFO['bio']}
             Skills: {', '.join([skill for skills in config.SKILLS.values() for skill in skills])}
+            
+            I am an AI Engineer specializing in Machine Learning, Deep Learning, Gen AI, and Agentic AI.
+            I have experience with Python, TensorFlow, PyTorch, LangChain, FastAPI, and React.
+            I build intelligent systems and transform complex problems into elegant solutions.
             """,
             metadata={"type": "personal_info"}
         )
         documents.append(personal_doc)
         
-        # Split documents
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,
-            chunk_overlap=50
-        )
-        splits = text_splitter.split_documents(documents)
-        
-        # Create vector store
-        self.vector_store = Chroma.from_documents(
-            documents=splits,
-            embedding=self.embeddings,
-            persist_directory="./chroma_db"
-        )
+        # If we have documents, create vector store
+        if documents:
+            # Split documents
+            text_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=500,
+                chunk_overlap=50
+            )
+            splits = text_splitter.split_documents(documents)
+            
+            # Create vector store
+            self.vector_store = Chroma.from_documents(
+                documents=splits,
+                embedding=self.embeddings,
+                persist_directory="./chroma_db"
+            )
         
         self.is_initialized = True
     
