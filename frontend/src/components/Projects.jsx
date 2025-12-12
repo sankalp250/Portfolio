@@ -49,8 +49,9 @@ const Projects = () => {
     const categories = ['All', 'Python', 'JavaScript', 'TypeScript', 'C++', 'Other'];
 
     // First filter by view mode (Featured/All)
+    // Featured = ALL repos with stars > 0
     let displayedProjects = viewMode === 'Featured'
-        ? projects.filter(p => featuredProjectNames.some(name => p.name.toLowerCase().includes(name)))
+        ? projects.filter(p => p.stargazers_count > 0).sort((a, b) => b.stargazers_count - a.stargazers_count)
         : projects;
 
     // Then apply language filter

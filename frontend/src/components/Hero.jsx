@@ -59,7 +59,11 @@ const Hero = () => {
                     <span>AI ENGINEER</span>
                 </motion.div>
 
-                <motion.h1 className="hero-title" variants={itemVariants}>
+                <motion.h1
+                    className="hero-title"
+                    variants={itemVariants}
+                    style={{ fontFamily: "'Rubik Glitch', cursive" }}
+                >
                     <span className="gradient-text">Sankalp Singh</span>
                 </motion.h1>
 
