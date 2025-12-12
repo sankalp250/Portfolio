@@ -117,9 +117,9 @@ class RAGEngine:
         
         # If we have documents, create vector store
         if documents:
-            # Split documents
+            # Split documents - reduced chunk size for better granularity
             text_splitter = RecursiveCharacterTextSplitter(
-                chunk_size=500,
+                chunk_size=300,  # Reduced from 500 for more precise chunks
                 chunk_overlap=50
             )
             splits = text_splitter.split_documents(documents)
@@ -134,23 +134,42 @@ class RAGEngine:
         self.is_initialized = True
     
     def get_response(self, question, chat_history=None):
-        """Get response from the chatbot"""
+        """Get response from RAG engine"""
         if not self.is_initialized:
             return "Please wait while I initialize my knowledge base..."
         
-        # Retrieve relevant documents
-        docs = self.vector_store.similarity_search(question, k=3)
-        context = "\n\n".join([doc.page_content for doc in docs])
+        if not self.vector_store:
+            return "Knowledge base is not available. Please initialize first."
         
-        # Create prompt
-        system_message = """You are an AI assistant for Sankalp Singh's portfolio. 
-        You help visitors learn about Sankalp's projects, skills, and experience.
-        Be friendly, professional, and informative. Use the provided context to answer questions.
-        If you don't know something, be honest about it.
+        # Retrieve relevant documents - increased from 3 to 5 for better resume coverage
+        docs = self.vector_store.similarity_search(question, k=5)
         
-        Context:
+        # Create context from retrieved documents
+        context_parts = []
+        for i, doc in enumerate(docs):
+            source_type = doc.metadata.get('type', 'unknown')
+            context_parts.append(f"[Source {i+1} - {source_type}]:\n{doc.page_content}")
+        
+        context = "\n\n---\n\n".join(context_parts)
+        
+        # System message with instructions
+        system_message = """You are an AI assistant representing Sankalp Singh, an AI Engineer. 
+        You have access to information from:
+        1. GitHub repositories and projects
+        2. Personal information and bio
+        3. Detailed resume including education, work experience, skills, and achievements
+        
+        When answering questions:
+        - Use specific details from the provided context
+        - For resume questions (education, work experience, skills), refer to the RESUME CONTENT sections
+        - Be conversational and helpful
+        - If asked about specific experiences or qualifications, cite them from the resume
+        - If the information isn't in the context, say so politely
+        
+        Context from knowledge base:
         {context}
-        """
+        
+        Answer the following question based on the context above:"""
         
         prompt = ChatPromptTemplate.from_messages([
             ("system", system_message),
