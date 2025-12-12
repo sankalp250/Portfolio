@@ -142,3 +142,27 @@ class GitHubAPI:
             "languages": all_languages,
             "public_repos": total_repos
         }
+    
+    def get_readme(self, repo_name: str) -> Optional[str]:
+        """Get README content for a specific repository"""
+        try:
+            # Try different README filenames
+            readme_names = ['README.md', 'readme.md', 'README', 'readme']
+            
+            for readme_name in readme_names:
+                url = f"{self.base_url}/repos/{self.username}/{repo_name}/contents/{readme_name}"
+                response = requests.get(url, headers=self.headers, timeout=10)
+                
+                if response.status_code == 200:
+                    content = response.json()
+                    # README content is base64 encoded
+                    import base64
+                    readme_content = base64.b64decode(content['content']).decode('utf-8')
+                    return readme_content
+            
+            return None  # No README found
+            
+        except Exception as e:
+            print(f"Error getting README for {repo_name}: {e}")
+            return None
+

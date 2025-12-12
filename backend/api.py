@@ -67,7 +67,8 @@ async def startup_event():
             repos = github.get_repositories()
             
             if repos:
-                rag_engine.initialize_knowledge_base(repos)
+                print(f"📖 Fetching READMEs for {len(repos)} repositories...")
+                rag_engine.initialize_knowledge_base(repos, github_api=github)
                 print(f"✅ Knowledge base initialized with {len(repos)} repositories")
             else:
                 print("⚠️ No repositories found, initializing with personal info only...")

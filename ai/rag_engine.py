@@ -45,7 +45,7 @@ class RAGEngine:
         self.vector_store = None
         self.is_initialized = False
     
-    def initialize_knowledge_base(self, repos=None):
+    def initialize_knowledge_base(self, repos=None, github_api=None):
         """Initialize vector store with repository data"""
         if self.is_initialized:
             return
@@ -55,6 +55,7 @@ class RAGEngine:
         # Create documents from repositories if provided
         if repos:
             for repo in repos:
+                # Basic metadata document
                 content = f"""
                 Project: {repo.get('name', '')}
                 Description: {repo.get('description', 'No description')}
@@ -72,10 +73,34 @@ class RAGEngine:
                     metadata={
                         "name": repo.get('name', ''),
                         "url": repo.get('html_url', ''),
-                        "language": repo.get('language', '')
+                        "language": repo.get('language', ''),
+                        "type": "repo_metadata"
                     }
                 )
                 documents.append(doc)
+                
+                # Fetch and add README content if available
+                if github_api:
+                    readme = github_api.get_readme(repo.get('name', ''))
+                    if readme:
+                        readme_doc = Document(
+                            page_content=f"""
+                            PROJECT README - {repo.get('name', '')}:
+                            
+                            {readme}
+                            
+                            Project URL: {repo.get('html_url', '')}
+                            """,
+                            metadata={
+                                "name": repo.get('name', ''),
+                                "url": repo.get('html_url', ''),
+                                "type": "readme",
+                                "source": f"{repo.get('name', '')}/README.md"
+                            }
+                        )
+                        documents.append(readme_doc)
+                        print(f"  ✅ Added README for {repo.get('name', '')}")
+        
         
         # Add personal information
         personal_doc = Document(
