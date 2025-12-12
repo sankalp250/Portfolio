@@ -93,7 +93,7 @@ class RAGEngine:
         )
         documents.append(personal_doc)
         
-        # Add resume content
+        # Add resume content with improved project extraction
         try:
             resume_path = "Sankalp_Singh_resume.pdf"
             if os.path.exists(resume_path):
@@ -103,15 +103,24 @@ class RAGEngine:
                     for page in pdf_reader.pages:
                         resume_text += page.extract_text() + "\n"
                     
+                    # Full resume document
                     resume_doc = Document(
                         page_content=f"""
-                        RESUME CONTENT:
+                        COMPLETE RESUME CONTENT:
                         {resume_text}
+                        
+                        KEY RESUME PROJECTS (Featured):
+                        - StudyBuddy: AI-powered study companion application
+                        - PromptBoost: Advanced prompt engineering tool
+                        - AgenticQA: Intelligent question-answering system using agentic AI
+                        
+                        These are the main projects highlighted in Sankalp Singh's resume.
+                        When asked about resume projects, refer to these three featured projects.
                         """,
                         metadata={"type": "resume", "source": "Sankalp_Singh_resume.pdf"}
                     )
                     documents.append(resume_doc)
-                    print(f"✅ Added resume to knowledge base")
+                    print(f"✅ Added resume to knowledge base with featured projects")
         except Exception as e:
             print(f"⚠️ Could not load resume: {e}")
         

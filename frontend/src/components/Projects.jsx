@@ -7,6 +7,7 @@ const Projects = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('All');
+    const [viewMode, setViewMode] = useState('Featured'); // Featured or All
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: '-100px' });
 
@@ -30,7 +31,8 @@ const Projects = () => {
                 language: repo.language || 'Other',
                 url: repo.html_url,
                 topics: repo.topics || [],
-                updated: repo.updated_at
+                updated: repo.updated_at,
+                isFeatured: repo.stargazers_count > 0 // Has at least 1 star
             }));
 
             setProjects(processedProjects);
@@ -41,11 +43,20 @@ const Projects = () => {
         }
     };
 
+    // Featured project names (from resume)
+    const featuredProjectNames = ['studybuddy', 'promptboost', 'agenticqa'];
+
     const categories = ['All', 'Python', 'JavaScript', 'TypeScript', 'C++', 'Other'];
 
+    // First filter by view mode (Featured/All)
+    let displayedProjects = viewMode === 'Featured'
+        ? projects.filter(p => featuredProjectNames.some(name => p.name.toLowerCase().includes(name)))
+        : projects;
+
+    // Then apply language filter
     const filteredProjects = filter === 'All'
-        ? projects
-        : projects.filter(p => p.language === filter);
+        ? displayedProjects
+        : displayedProjects.filter(p => p.language === filter);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -78,7 +89,32 @@ const Projects = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2 className="section-title gradient-text">Projects</h2>
-                    <p className="section-subtitle">Featured work from my GitHub</p>
+                    <p className="section-subtitle">
+                        {viewMode === 'Featured' ? 'Featured Projects from Resume' : 'All Projects from GitHub'}
+                    </p>
+                </motion.div>
+
+                {/* View Mode Toggle */}
+                <motion.div
+                    className="view-mode-toggle"
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : {}}
+                    transition={{ delay: 0.2 }}
+                    style={{ marginBottom: '1rem', textAlign: 'center' }}
+                >
+                    <button
+                        className={`filter-tab ${viewMode === 'Featured' ? 'active' : ''}`}
+                        onClick={() => setViewMode('Featured')}
+                        style={{ marginRight: '0.5rem' }}
+                    >
+                        ⭐ Featured
+                    </button>
+                    <button
+                        className={`filter-tab ${viewMode === 'All' ? 'active' : ''}`}
+                        onClick={() => setViewMode('All')}
+                    >
+                        📂 All Projects
+                    </button>
                 </motion.div>
 
                 <motion.div

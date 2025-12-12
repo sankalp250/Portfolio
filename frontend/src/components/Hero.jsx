@@ -86,7 +86,7 @@ const Hero = () => {
                         View Projects
                     </motion.button>
                     <motion.button
-                        onClick={() => window.open('https://drive.google.com/file/d/1aSZVM3Txgo7fAZGZA9qA8hHRH1qxz6y3/view?usp=sharing', '_blank')}
+                        onClick={() => window.open('https://drive.google.com/file/d/1uE-OIIzMtXEre6l9OIM_iZwYGi0pj5oR/view?usp=sharing', '_blank')}
                         className="btn btn-secondary"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
