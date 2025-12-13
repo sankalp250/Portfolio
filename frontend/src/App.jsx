@@ -8,6 +8,7 @@ import GitHubStats from './components/GitHubStats';
 import ChatBot from './components/ChatBot';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
+import MoonBackground from './components/MoonBackground';
 import './index.css';
 
 function App() {
