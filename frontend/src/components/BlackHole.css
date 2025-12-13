@@ -1,0 +1,247 @@
+.black-hole-container {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 350px;
+    height: 350px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.black-hole {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Core black center */
+.event-horizon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, #000 0%, #000 70%, transparent 100%);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow:
+        0 0 30px 10px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px 5px #000;
+}
+
+/* Accretion disk */
+.accretion-disk {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: perspective(500px) rotateX(75deg);
+}
+
+.ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transform: translate(-50%, -50%);
+    animation: spin 8s linear infinite;
+}
+
+.ring-1 {
+    width: 180px;
+    height: 180px;
+    border-image: linear-gradient(90deg, #fff, #888, #fff, #666) 1;
+    border-width: 3px;
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.5),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
+    animation-duration: 6s;
+}
+
+.ring-2 {
+    width: 220px;
+    height: 220px;
+    border-image: linear-gradient(90deg, #ccc, #555, #ccc, #444) 1;
+    border-width: 2px;
+    box-shadow:
+        0 0 10px rgba(200, 200, 200, 0.4),
+        inset 0 0 10px rgba(200, 200, 200, 0.2);
+    animation-duration: 10s;
+    animation-direction: reverse;
+}
+
+.ring-3 {
+    width: 260px;
+    height: 260px;
+    border-image: linear-gradient(90deg, #999, #333, #999, #222) 1;
+    border-width: 1px;
+    box-shadow: 0 0 8px rgba(150, 150, 150, 0.3);
+    animation-duration: 14s;
+}
+
+/* Light jets */
+.light-jet {
+    position: absolute;
+    width: 4px;
+    height: 150px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), rgba(200, 200, 200, 0.4), transparent);
+    left: 50%;
+    transform: translateX(-50%);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.jet-top {
+    bottom: 65%;
+    transform: translateX(-50%) rotate(-30deg);
+    transform-origin: bottom center;
+}
+
+.jet-bottom {
+    top: 65%;
+    transform: translateX(-50%) rotate(150deg);
+    transform-origin: top center;
+}
+
+/* Outer glow */
+.glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(150, 150, 150, 0.05) 30%,
+            transparent 70%);
+    border-radius: 50%;
+    animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* Particles */
+.particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    animation: spiral 4s linear infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+}
+
+/* Animations */
+@keyframes spin {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        height: 120px;
+    }
+
+    50% {
+        opacity: 1;
+        height: 150px;
+    }
+}
+
+@keyframes glowPulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes spiral {
+    0% {
+        transform: rotate(var(--angle)) translateX(var(--distance)) rotate(-var(--angle));
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: rotate(calc(var(--angle) + 360deg)) translateX(30px) rotate(calc(-var(--angle) - 360deg));
+        opacity: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .black-hole-container {
+        width: 280px;
+        height: 280px;
+        right: 2%;
+    }
+}
+
+@media (max-width: 768px) {
+    .black-hole-container {
+        width: 200px;
+        height: 200px;
+        right: 5%;
+        top: 15%;
+        transform: none;
+    }
+
+    .ring-1 {
+        width: 120px;
+        height: 120px;
+    }
+
+    .ring-2 {
+        width: 150px;
+        height: 150px;
+    }
+
+    .ring-3 {
+        width: 180px;
+        height: 180px;
+    }
+
+    .event-horizon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .glow {
+        width: 200px;
+        height: 200px;
+    }
+
+    .light-jet {
+        height: 100px;
+    }
+}

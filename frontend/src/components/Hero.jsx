@@ -1,6 +1,8 @@
+```
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Scene3D from './3D/Scene3D';
+import BlackHole from './BlackHole';
 import './Hero.css';
 
 const Hero = () => {
@@ -45,6 +47,7 @@ const Hero = () => {
     return (
         <div className="hero">
             <Scene3D />
+            <BlackHole />
 
             <motion.div
                 className="hero-content"
@@ -52,7 +55,7 @@ const Hero = () => {
                 initial="hidden"
                 animate="visible"
                 style={{
-                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`
+                    transform: `translate(${ mousePosition.x }px, ${ mousePosition.y }px)`
                 }}
             >
                 <motion.div className="hero-tag" variants={itemVariants}>
