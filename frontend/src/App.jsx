@@ -8,6 +8,7 @@ import GitHubStats from './components/GitHubStats';
 import ChatBot from './components/ChatBot';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
+import StarsBackground from './components/StarsBackground';
 import './index.css';
 
 function App() {
@@ -35,8 +36,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-
-
+        <StarsBackground />
         <Navigation />
         <main>
           <section id="home">
