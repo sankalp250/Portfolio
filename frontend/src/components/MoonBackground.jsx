@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 import './MoonBackground.css';
 
 // Simple rotating moon
@@ -24,29 +25,24 @@ function Moon() {
     );
 }
 
-// Simple stars
+// Fixed stars implementation
 function Stars() {
-    const ref = useRef();
+    const points = useMemo(() => {
+        const count = 1000;
+        const positions = new Float32Array(count * 3);
 
-    const count = 1000;
-    const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 50;
+        }
 
-    for (let i = 0; i < count; i++) {
-        positions[i * 3] = (Math.random() - 0.5) * 50;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
-    }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        return geometry;
+    }, []);
 
     return (
-        <points ref={ref}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    count={count}
-                    array={positions}
-                    itemSize={3}
-                />
-            </bufferGeometry>
+        <points geometry={points}>
             <pointsMaterial size={0.05} color="white" sizeAttenuation />
         </points>
     );
@@ -57,24 +53,32 @@ function Meteor({ startDelay = 0 }) {
     const ref = useRef();
     const trailRef = useRef();
     const speedRef = useRef(0.1 + Math.random() * 0.05);
-    const startTime = useRef(Date.now() + startDelay * 1000);
+    const initialized = useRef(false);
 
     useFrame(() => {
         if (!ref.current || !trailRef.current) return;
 
-        const elapsed = Date.now() - startTime.current;
-        if (elapsed < 0) return;
+        // Initialize position
+        if (!initialized.current) {
+            ref.current.position.set(
+                15 + Math.random() * 10,
+                -5 + Math.random() * 10,
+                -15 - Math.random() * 5
+            );
+            trailRef.current.position.copy(ref.current.position);
+            initialized.current = true;
+        }
 
         // Move
         ref.current.position.x -= speedRef.current;
         ref.current.position.y -= speedRef.current * 0.5;
 
         // Trail follows
-        trailRef.current.position.copy(ref.current.position);
-        trailRef.current.position.x += 0.3;
-        trailRef.current.position.y += 0.15;
+        trailRef.current.position.x = ref.current.position.x + 0.3;
+        trailRef.current.position.y = ref.current.position.y + 0.15;
+        trailRef.current.position.z = ref.current.position.z;
 
-        // Reset
+        // Reset when off screen
         if (ref.current.position.x < -20) {
             ref.current.position.set(
                 15 + Math.random() * 10,
@@ -87,12 +91,12 @@ function Meteor({ startDelay = 0 }) {
 
     return (
         <group>
-            <mesh ref={ref} position={[15 + Math.random() * 10, -5 + Math.random() * 10, -15 - Math.random() * 5]}>
-                <sphereGeometry args={[0.05]} />
+            <mesh ref={ref}>
+                <sphereGeometry args={[0.05, 8, 8]} />
                 <meshBasicMaterial color="white" />
             </mesh>
             <mesh ref={trailRef} rotation={[0, 0, -0.785]}>
-                <coneGeometry args={[0.02, 0.5, 4]} />
+                <coneGeometry args={[0.02, 0.5, 8]} />
                 <meshBasicMaterial color="white" transparent opacity={0.5} />
             </mesh>
         </group>
@@ -104,7 +108,7 @@ const MoonBackground = () => {
         <div className="moon-background">
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 50 }}
-                style={{ background: 'transparent' }}
+                gl={{ antialias: true }}
             >
                 <ambientLight intensity={0.3} />
                 <directionalLight position={[-5, 5, 5]} intensity={1} />
