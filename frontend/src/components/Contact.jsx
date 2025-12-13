@@ -19,7 +19,7 @@ const Contact = () => {
         },
         {
             name: 'Email',
-            url: 'mailto:sankalpsingh2595@gmail.com',
+            url: 'https://mail.google.com/mail/?view=cm&to=sankalpsingh2595@gmail.com',
             icon: '📧'
         },
         {

@@ -32,8 +32,11 @@ const Projects = () => {
                 url: repo.html_url,
                 topics: repo.topics || [],
                 updated: repo.updated_at,
-                isFeatured: repo.stargazers_count > 0 // Has at least 1 star
+                stargazers_count: repo.stargazers_count // Keep original property too
             }));
+
+            console.log('Total projects:', processedProjects.length);
+            console.log('Projects with stars:', processedProjects.filter(p => p.stars > 0).length);
 
             setProjects(processedProjects);
             setLoading(false);
@@ -51,8 +54,11 @@ const Projects = () => {
     // First filter by view mode (Featured/All)
     // Featured = ALL repos with stars > 0
     let displayedProjects = viewMode === 'Featured'
-        ? projects.filter(p => p.stargazers_count > 0).sort((a, b) => b.stargazers_count - a.stargazers_count)
+        ? projects.filter(p => p.stars > 0).sort((a, b) => b.stars - a.stars)
         : projects;
+
+    console.log('View mode:', viewMode);
+    console.log('Displayed projects count:', displayedProjects.length);
 
     // Then apply language filter
     const filteredProjects = filter === 'All'

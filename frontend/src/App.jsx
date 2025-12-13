@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Hero from './components/Hero';
 import About from './components/About';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
 import GitHubStats from './components/GitHubStats';
 import ChatBot from './components/ChatBot';
@@ -13,7 +14,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate initial load
+    // Simulate initial load  
     setTimeout(() => setLoading(false), 1000);
   }, []);
 
@@ -42,6 +43,9 @@ function App() {
           <section id="about">
             <About />
           </section>
+          <section id="experience">
+            <Experience />
+          </section>
           <section id="projects">
             <Projects />
           </section>
@@ -61,4 +65,3 @@ function App() {
 }
 
 export default App;
-
