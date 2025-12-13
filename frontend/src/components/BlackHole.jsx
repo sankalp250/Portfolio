@@ -1,12 +1,56 @@
 import './BlackHole.css';
 
 const BlackHole = () => {
+    // Generate radial streaks
+    const streaks = [];
+    for (let i = 0; i < 16; i++) {
+        const angle = i * 22.5;
+        const delay = i * 0.2;
+        streaks.push(
+            <div
+                key={i}
+                className="streak"
+                style={{
+                    transform: `rotate(${angle}deg) translateY(-50px)`,
+                    animationDelay: `${delay}s`
+                }}
+            />
+        );
+    }
+
+    // Generate orbiting particles
+    const particles = [];
+    for (let i = 0; i < 12; i++) {
+        const angle = i * 30;
+        const delay = i * 0.3;
+        const duration = 3 + Math.random() * 2;
+        particles.push(
+            <div
+                key={i}
+                className="particle"
+                style={{
+                    '--angle': `${angle}deg`,
+                    animationDelay: `${delay}s`,
+                    animationDuration: `${duration}s`
+                }}
+            />
+        );
+    }
+
     return (
         <div className="black-hole-container">
-            {/* Core black hole */}
+            {/* Outer glow */}
+            <div className="glow"></div>
+
+            {/* Radial streaks */}
+            <div className="streaks">
+                {streaks}
+            </div>
+
             <div className="black-hole">
-                {/* Event horizon */}
-                <div className="event-horizon"></div>
+                {/* Light jets */}
+                <div className="light-jet jet-top"></div>
+                <div className="light-jet jet-bottom"></div>
 
                 {/* Accretion disk rings */}
                 <div className="accretion-disk">
@@ -15,27 +59,13 @@ const BlackHole = () => {
                     <div className="ring ring-3"></div>
                 </div>
 
-                {/* Light beams/jets */}
-                <div className="light-jet jet-top"></div>
-                <div className="light-jet jet-bottom"></div>
+                {/* Event horizon (black center) */}
+                <div className="event-horizon"></div>
 
-                {/* Glow effect */}
-                <div className="glow"></div>
-            </div>
-
-            {/* Particles being pulled in */}
-            <div className="particles">
-                {[...Array(20)].map((_, i) => (
-                    <div
-                        key={i}
-                        className="particle"
-                        style={{
-                            '--delay': `${i * 0.5}s`,
-                            '--angle': `${i * 18}deg`,
-                            '--distance': `${100 + Math.random() * 100}px`
-                        }}
-                    ></div>
-                ))}
+                {/* Orbiting particles */}
+                <div className="particles">
+                    {particles}
+                </div>
             </div>
         </div>
     );
