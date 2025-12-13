@@ -4,7 +4,8 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    /* Change z-index to 0 to be above body background, but ensure content is higher */
+    z-index: 0;
     pointer-events: none;
     background: transparent;
 }
