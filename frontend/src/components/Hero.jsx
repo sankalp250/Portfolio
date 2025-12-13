@@ -1,4 +1,3 @@
-```javascript
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Scene3D from './3D/Scene3D';
@@ -55,7 +54,7 @@ const Hero = () => {
                 initial="hidden"
                 animate="visible"
                 style={{
-                    transform: `translate(${ mousePosition.x }px, ${ mousePosition.y }px)`
+                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`
                 }}
             >
                 <motion.div className="hero-tag" variants={itemVariants}>
