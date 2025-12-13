@@ -171,7 +171,7 @@ const MoonBackground = () => {
 
                 {/* Shooting Stars */}
                 <ShootingStar delay={0} />
-                <ShootingS tar delay={2} />
+                <ShootingStar delay={2} />
                 <ShootingStar delay={4} />
                 <ShootingStar delay={6} />
                 <ShootingStar delay={8} />
