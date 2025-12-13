@@ -90,8 +90,8 @@ function Moon() {
     });
 
     return (
-        <mesh ref={meshRef} position={[6, 1, -8]} castShadow>
-            <sphereGeometry args={[1.8, 64, 64]} />
+        <mesh ref={meshRef} position={[7, 2, -6]} castShadow>
+            <sphereGeometry args={[3.5, 64, 64]} />
             <meshStandardMaterial
                 map={moonTexture}
                 bumpMap={bumpMap}
