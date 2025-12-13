@@ -7,16 +7,11 @@
     z-index: -1;
     pointer-events: none;
     background: transparent;
+    overflow: hidden;
 }
 
 .moon-background canvas {
     display: block;
-    width: 100%;
-    height: 100%;
-}
-
-/* Ensure content above is visible */
-body {
-    position: relative;
-    z-index: 1;
+    width: 100% !important;
+    height: 100% !important;
 }

@@ -1,187 +1,121 @@
-import { useRef, Suspense } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
 import './MoonBackground.css';
 
-// Procedural moon with craters using noise
+// Simple rotating moon
 function Moon() {
-    const meshRef = useRef();
-    const materialRef = useRef();
+    const ref = useRef();
 
-    useFrame((state) => {
-        if (meshRef.current) {
-            // Slow rotation
-            meshRef.current.rotation.y += 0.0005;
-            meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.05;
+    useFrame(() => {
+        if (ref.current) {
+            ref.current.rotation.y += 0.002;
         }
     });
 
     return (
-        <mesh ref={meshRef} position={[6, 1, -8]} castShadow>
-            <sphereGeometry args={[1.5, 64, 64]} />
+        <mesh ref={ref} position={[4, 0, -5]}>
+            <sphereGeometry args={[1.2, 32, 32]} />
             <meshStandardMaterial
-                ref={materialRef}
-                color="#d4d4d4"
-                roughness={0.95}
-                metalness={0.05}
-                emissive="#2a2a2a"
-                emissiveIntensity={0.15}
-                displacementScale={0.15}
+                color="#cccccc"
+                roughness={1}
+                metalness={0}
             />
         </mesh>
     );
 }
 
-// Starfield with depth
-function StarField() {
-    const starsRef = useRef();
+// Simple stars
+function Stars() {
+    const ref = useRef();
 
-    useFrame((state) => {
-        if (starsRef.current) {
-            starsRef.current.rotation.y = state.clock.elapsedTime * 0.01;
-        }
-    });
+    const count = 1000;
+    const positions = new Float32Array(count * 3);
 
-    const starPositions = new Float32Array(3000 * 3);
-    for (let i = 0; i < 3000; i++) {
-        const i3 = i * 3;
-        const radius = 50 + Math.random() * 100;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.random() * Math.PI;
-
-        starPositions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-        starPositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-        starPositions[i3 + 2] = radius * Math.cos(phi) - 30;
+    for (let i = 0; i < count; i++) {
+        positions[i * 3] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
     }
 
     return (
-        <points ref={starsRef}>
+        <points ref={ref}>
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
-                    count={3000}
-                    array={starPositions}
+                    count={count}
+                    array={positions}
                     itemSize={3}
                 />
             </bufferGeometry>
-            <pointsMaterial
-                size={0.05}
-                color="#ffffff"
-                transparent
-                opacity={0.8}
-                sizeAttenuation
-            />
+            <pointsMaterial size={0.05} color="white" sizeAttenuation />
         </points>
     );
 }
 
-// Realistic shooting stars with trails
-function ShootingStar({ index }) {
-    const meshRef = useRef();
-    const tailRef = useRef();
-    const speed = useRef(0.15 + Math.random() * 0.1);
-    const reset = useRef(false);
+// Shooting star
+function Meteor({ startDelay = 0 }) {
+    const ref = useRef();
+    const trailRef = useRef();
+    const speedRef = useRef(0.1 + Math.random() * 0.05);
+    const startTime = useRef(Date.now() + startDelay * 1000);
 
     useFrame(() => {
-        if (meshRef.current && tailRef.current) {
-            if (!reset.current) {
-                // Initial random position
-                meshRef.current.position.set(
-                    20 + Math.random() * 20,
-                    -5 + Math.random() * 15,
-                    -20 + Math.random() * 10
-                );
-                tailRef.current.position.copy(meshRef.current.position);
-                reset.current = true;
-            }
+        if (!ref.current || !trailRef.current) return;
 
-            // Move diagonally
-            meshRef.current.position.x -= speed.current;
-            meshRef.current.position.y -= speed.current * 0.5;
+        const elapsed = Date.now() - startTime.current;
+        if (elapsed < 0) return;
 
-            // Update tail to follow
-            tailRef.current.position.x = meshRef.current.position.x + 0.5;
-            tailRef.current.position.y = meshRef.current.position.y + 0.25;
-            tailRef.current.position.z = meshRef.current.position.z;
+        // Move
+        ref.current.position.x -= speedRef.current;
+        ref.current.position.y -= speedRef.current * 0.5;
 
-            // Reset when off screen
-            if (meshRef.current.position.x < -30) {
-                meshRef.current.position.set(
-                    20 + Math.random() * 20,
-                    -5 + Math.random() * 15,
-                    -20 + Math.random() * 10
-                );
-                tailRef.current.position.copy(meshRef.current.position);
-                speed.current = 0.15 + Math.random() * 0.1;
-            }
+        // Trail follows
+        trailRef.current.position.copy(ref.current.position);
+        trailRef.current.position.x += 0.3;
+        trailRef.current.position.y += 0.15;
+
+        // Reset
+        if (ref.current.position.x < -20) {
+            ref.current.position.set(
+                15 + Math.random() * 10,
+                -5 + Math.random() * 10,
+                -15 - Math.random() * 5
+            );
+            speedRef.current = 0.1 + Math.random() * 0.05;
         }
     });
 
     return (
         <group>
-            {/* Star head */}
-            <mesh ref={meshRef}>
-                <sphereGeometry args={[0.08, 8, 8]} />
-                <meshBasicMaterial color="#ffffff" />
+            <mesh ref={ref} position={[15 + Math.random() * 10, -5 + Math.random() * 10, -15 - Math.random() * 5]}>
+                <sphereGeometry args={[0.05]} />
+                <meshBasicMaterial color="white" />
             </mesh>
-
-            {/* Trail */}
-            <mesh ref={tailRef} rotation={[0, 0, -Math.PI / 4]}>
-                <coneGeometry args={[0.03, 0.8, 8]} />
-                <meshBasicMaterial
-                    color="#ffffff"
-                    transparent
-                    opacity={0.6}
-                />
+            <mesh ref={trailRef} rotation={[0, 0, -0.785]}>
+                <coneGeometry args={[0.02, 0.5, 4]} />
+                <meshBasicMaterial color="white" transparent opacity={0.5} />
             </mesh>
         </group>
     );
 }
 
-// Meteors group
-function Meteors() {
-    return (
-        <group>
-            {[...Array(6)].map((_, i) => (
-                <ShootingStar key={i} index={i} />
-            ))}
-        </group>
-    );
-}
-
-// Main scene
 const MoonBackground = () => {
     return (
         <div className="moon-background">
             <Canvas
-                camera={{ position: [0, 0, 10], fov: 60 }}
-                gl={{
-                    alpha: true,
-                    antialias: true,
-                    powerPreference: "high-performance"
-                }}
-                dpr={[1, 2]}
+                camera={{ position: [0, 0, 10], fov: 50 }}
+                style={{ background: 'transparent' }}
             >
-                <Suspense fallback={null}>
-                    {/* Lighting setup */}
-                    <ambientLight intensity={0.2} />
-                    <directionalLight
-                        position={[-10, 5, 5]}
-                        intensity={1.2}
-                        castShadow
-                    />
-                    <pointLight
-                        position={[6, 1, -7]}
-                        intensity={0.8}
-                        color="#ffffee"
-                        distance={15}
-                    />
+                <ambientLight intensity={0.3} />
+                <directionalLight position={[-5, 5, 5]} intensity={1} />
+                <pointLight position={[4, 0, -4]} intensity={0.5} color="#ffffcc" />
 
-                    {/* Scene elements */}
-                    <StarField />
-                    <Moon />
-                    <Meteors />
-                </Suspense>
+                <Stars />
+                <Moon />
+                <Meteor startDelay={0} />
+                <Meteor startDelay={1} />
+                <Meteor startDelay={2} />
+                <Meteor startDelay={3} />
             </Canvas>
         </div>
     );
