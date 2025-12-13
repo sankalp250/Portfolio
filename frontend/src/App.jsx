@@ -8,7 +8,6 @@ import GitHubStats from './components/GitHubStats';
 import ChatBot from './components/ChatBot';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
-import MoonBackground from './components/MoonBackground';
 import './index.css';
 
 function App() {
@@ -36,8 +35,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        {/* Three.js Moon Background */}
-        <MoonBackground />
+
 
         <Navigation />
         <main>

@@ -4,53 +4,59 @@ import { Stars } from '@react-three/drei';
 import * as THREE from 'three';
 import './MoonBackground.css';
 
-// Realistic Moon with procedural texture
+// Realistic Moon with better texture
 function Moon() {
     const meshRef = useRef();
 
-    // Create realistic moon texture procedurally
+    // Create more realistic moon texture
     const { moonTexture, bumpMap } = useMemo(() => {
         const createTexture = (isBump) => {
             const canvas = document.createElement('canvas');
-            canvas.width = 512;
-            canvas.height = 512;
+            canvas.width = 256;
+            canvas.height = 256;
             const context = canvas.getContext('2d');
 
             if (isBump) {
+                // Grayscale bump for subtle depth
                 context.fillStyle = '#808080';
-                context.fillRect(0, 0, 512, 512);
-                for (let i = 0; i < 100; i++) {
-                    const x = Math.random() * 512;
-                    const y = Math.random() * 512;
-                    const radius = Math.random() * 15 + 3;
+                context.fillRect(0, 0, 256, 256);
+                for (let i = 0; i < 30; i++) {
+                    const x = Math.random() * 256;
+                    const y = Math.random() * 256;
+                    const radius = Math.random() * 8 + 2;
                     const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-                    gradient.addColorStop(0, '#ffffff');
-                    gradient.addColorStop(1, '#000000');
+                    gradient.addColorStop(0, '#606060');
+                    gradient.addColorStop(1, '#808080');
                     context.fillStyle = gradient;
                     context.beginPath();
                     context.arc(x, y, radius, 0, Math.PI * 2);
                     context.fill();
                 }
             } else {
-                const gradient = context.createRadialGradient(256, 256, 0, 256, 256, 256);
-                gradient.addColorStop(0, '#f0f0f0');
-                gradient.addColorStop(0.5, '#d4d4d4');
-                gradient.addColorStop(1, '#999999');
+                // More realistic moon color - soft gray with subtle variations
+                const gradient = context.createRadialGradient(128, 128, 0, 128, 128, 140);
+                gradient.addColorStop(0, '#e0ddd5');
+                gradient.addColorStop(0.4, '#c8c4bc');
+                gradient.addColorStop(0.7, '#b0aca4');
+                gradient.addColorStop(1, '#888580');
                 context.fillStyle = gradient;
-                context.fillRect(0, 0, 512, 512);
+                context.fillRect(0, 0, 256, 256);
 
-                // Craters
-                for (let i = 0; i < 50; i++) {
-                    const x = Math.random() * 512;
-                    const y = Math.random() * 512;
-                    const radius = Math.random() * 20 + 5;
+                // Subtle dark mare (seas)
+                context.globalAlpha = 0.15;
+                for (let i = 0; i < 8; i++) {
+                    const x = Math.random() * 256;
+                    const y = Math.random() * 256;
+                    const radius = Math.random() * 25 + 10;
                     const craterGradient = context.createRadialGradient(x, y, 0, x, y, radius);
-                    craterGradient.addColorStop(0, '#888888');
-                    craterGradient.addColorStop(0.5, '#aaaaaa');
+                    craterGradient.addColorStop(0, '#606060');
                     craterGradient.addColorStop(1, 'transparent');
                     context.fillStyle = craterGradient;
-                    context.fillRect(x - radius, y - radius, radius * 2, radius * 2);
+                    context.beginPath();
+                    context.arc(x, y, radius, 0, Math.PI * 2);
+                    context.fill();
                 }
+                context.globalAlpha = 1;
             }
             return new THREE.CanvasTexture(canvas);
         };
@@ -61,7 +67,6 @@ function Moon() {
         };
     }, []);
 
-    // Cleanup textures on unmount to prevent Memory Leaks
     useEffect(() => {
         return () => {
             moonTexture.dispose();
@@ -71,22 +76,21 @@ function Moon() {
 
     useFrame(() => {
         if (meshRef.current) {
-            meshRef.current.rotation.y += 0.001;
+            meshRef.current.rotation.y += 0.0005;
         }
     });
 
     return (
-        // High-res geometry but optimized
-        <mesh ref={meshRef} position={[5, 1, -3]}>
-            <sphereGeometry args={[3.5, 48, 48]} />
+        <mesh ref={meshRef} position={[6, 1.5, -8]}>
+            <sphereGeometry args={[1.8, 64, 64]} />
             <meshStandardMaterial
                 map={moonTexture}
                 bumpMap={bumpMap}
-                bumpScale={0.05}
-                roughness={0.9}
+                bumpScale={0.02}
+                roughness={1}
                 metalness={0}
                 emissive="#1a1a1a"
-                emissiveIntensity={0.1}
+                emissiveIntensity={0.05}
             />
         </mesh>
     );
@@ -114,12 +118,12 @@ function ShootingStar({ delay = 0 }) {
     return (
         <group>
             <mesh ref={headRef}>
-                <sphereGeometry args={[0.08, 8, 8]} />
+                <sphereGeometry args={[0.05, 8, 8]} />
                 <meshBasicMaterial color="#ffffff" />
             </mesh>
             <mesh ref={trailRef} rotation={[0, 0, -Math.PI / 4]}>
-                <coneGeometry args={[0.03, 0.8, 8]} />
-                <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
+                <coneGeometry args={[0.02, 0.4, 8]} />
+                <meshBasicMaterial color="#ffffff" transparent opacity={0.5} />
             </mesh>
         </group>
     );
@@ -130,38 +134,33 @@ const MoonBackground = () => {
         <div className="moon-background">
             <Canvas
                 camera={{ position: [0, 0, 10], fov: 60 }}
-                // Optimize renderer settings to save memory
                 gl={{
                     antialias: true,
                     alpha: true,
                     powerPreference: "default",
-                    depth: true,
                     stencil: false
                 }}
             >
-                <ambientLight intensity={0.4} />
-                {/* Removed castShadow to save memory - space doesn't need shadows */}
-                <directionalLight position={[-10, 5, 5]} intensity={1.5} />
-                <pointLight position={[6, 1, -7]} intensity={1} color="#ffffee" />
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[-10, 5, 5]} intensity={1.2} />
+                <pointLight position={[6, 2, -6]} intensity={0.8} color="#ffffee" />
 
                 <Stars
                     radius={100}
                     depth={50}
-                    count={3000} // Reduced from 5000 to save memory
+                    count={2000}
                     factor={4}
                     saturation={0}
                     fade
-                    speed={0.5}
+                    speed={0.3}
                 />
 
                 <Moon />
 
                 <ShootingStar delay={0} />
-                <ShootingStar delay={2} />
-                <ShootingStar delay={4} />
+                <ShootingStar delay={3} />
                 <ShootingStar delay={6} />
-                <ShootingStar delay={8} />
-                <ShootingStar delay={10} />
+                <ShootingStar delay={9} />
             </Canvas>
         </div>
     );
