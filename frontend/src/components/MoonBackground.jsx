@@ -77,7 +77,7 @@ function Moon() {
 
     return (
         // High-res geometry but optimized
-        <mesh ref={meshRef} position={[8, 2, -4]}>
+        <mesh ref={meshRef} position={[5, 1, -3]}>
             <sphereGeometry args={[3.5, 48, 48]} />
             <meshStandardMaterial
                 map={moonTexture}
