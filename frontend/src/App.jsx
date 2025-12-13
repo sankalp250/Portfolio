@@ -36,6 +36,9 @@ function App() {
   return (
     <Router>
       <div className="app">
+        {/* Three.js Moon Background */}
+        <MoonBackground />
+
         <Navigation />
         <main>
           <section id="home">
