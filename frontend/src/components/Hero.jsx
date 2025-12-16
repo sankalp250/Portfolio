@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import Scene3D from './3D/Scene3D';
-import BlackHole from './BlackHole';
+import SilverSurfer from './SilverSurfer';
 import './Hero.css';
 
 const Hero = () => {
@@ -46,7 +46,7 @@ const Hero = () => {
     return (
         <div className="hero">
             <Scene3D />
-            <BlackHole />
+            <SilverSurfer />
 
             <motion.div
                 className="hero-content"

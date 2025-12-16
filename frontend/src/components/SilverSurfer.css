@@ -1,0 +1,77 @@
+.silver-surfer-container {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.silver-surfer-image {
+    width: auto;
+    height: 70vh;
+    max-height: 600px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(100, 180, 255, 0.5));
+}
+
+.silver-surfer-glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(100, 180, 255, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: -1;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .silver-surfer-container {
+        right: 2%;
+    }
+
+    .silver-surfer-image {
+        height: 55vh;
+        max-height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .silver-surfer-container {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        margin-top: 2rem;
+        order: -1;
+    }
+
+    .silver-surfer-image {
+        height: 40vh;
+        max-height: 300px;
+    }
+
+    .silver-surfer-glow {
+        width: 200px;
+        height: 200px;
+    }
+}
