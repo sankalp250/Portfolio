@@ -12,10 +12,10 @@
 
 .silver-surfer-image {
     width: auto;
-    height: 70vh;
-    max-height: 600px;
+    height: 45vh;
+    max-height: 380px;
     object-fit: contain;
-    filter: drop-shadow(0 0 30px rgba(100, 180, 255, 0.5));
+    filter: invert(1) brightness(0.75) drop-shadow(0 0 8px rgba(100, 180, 255, 0.2));
 }
 
 .silver-surfer-glow {

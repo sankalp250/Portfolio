@@ -47,6 +47,13 @@
 .github-link-container {
     text-align: center;
     margin-top: var(--space-12);
+    position: relative;
+    z-index: 10;
+}
+
+.github-link-container .btn {
+    position: relative;
+    z-index: 10;
 }
 
 @media (max-width: 768px) {

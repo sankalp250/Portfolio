@@ -10,8 +10,8 @@ const SilverSurfer = () => {
             transition={{ duration: 1.5, ease: "easeOut" }}
         >
             <motion.img
-                src="/silver-surfer.png"
-                alt="Silver Surfer"
+                src="/hero-figure.png"
+                alt="Hero Figure"
                 className="silver-surfer-image"
                 animate={{
                     y: [0, -15, 0],

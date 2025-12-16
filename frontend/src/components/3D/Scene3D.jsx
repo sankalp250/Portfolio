@@ -9,8 +9,8 @@ function ParticleField() {
     const sphere = random.inSphere(new Float32Array(5000), { radius: 1.5 });
 
     useFrame((state, delta) => {
-        ref.current.rotation.x -= delta / 10;
-        ref.current.rotation.y -= delta / 15;
+        ref.current.rotation.x -= delta / 2.5;
+        ref.current.rotation.y -= delta / 4;
     });
 
     return (
@@ -48,9 +48,9 @@ function ShootingStar({ delay = 0 }) {
             );
         }
 
-        // Move the shooting star
-        ref.current.position.x -= 0.01;
-        ref.current.position.y -= 0.008;
+        // Move the shooting star - faster movement
+        ref.current.position.x -= 0.03;
+        ref.current.position.y -= 0.024;
     });
 
     return (
@@ -87,9 +87,9 @@ function Comet({ delay = 0 }) {
             );
         }
 
-        // Move the comet diagonally
-        ref.current.position.x -= 0.015;
-        ref.current.position.y -= 0.012;
+        // Move the comet diagonally - faster movement
+        ref.current.position.x -= 0.045;
+        ref.current.position.y -= 0.036;
     });
 
     return (
