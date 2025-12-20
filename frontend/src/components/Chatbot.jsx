@@ -4,7 +4,7 @@ import axios from 'axios';
 import robotAvatar from '../assets/robot-avatar.png';
 import './Chatbot.css';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const ChatBot = () => {
     const [isOpen, setIsOpen] = useState(false);
