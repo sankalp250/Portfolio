@@ -5,7 +5,7 @@ import About from './components/About';
 import Experience from './components/Experience';
 import Projects from './components/Projects';
 import GitHubStats from './components/GitHubStats';
-import ChatBot from './components/ChatBot';
+import ChatBot from './components/Chatbot';
 import Contact from './components/Contact';
 import Navigation from './components/Navigation';
 import StarsBackground from './components/StarsBackground';
