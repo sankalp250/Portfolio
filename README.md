@@ -1,287 +1,138 @@
-# 🤖 AI Engineer Portfolio
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react" alt="React"/>
+  <img src="https://img.shields.io/badge/Three.js-0.181-000000?style=for-the-badge&logo=three.js" alt="Three.js"/>
+  <img src="https://img.shields.io/badge/FastAPI-0.104-009688?style=for-the-badge&logo=fastapi" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Deployed-Vercel-000000?style=for-the-badge&logo=vercel" alt="Vercel"/>
+</p>
 
-A stunning, AI-powered portfolio website built with Streamlit that dynamically showcases GitHub projects with modern UI/UX, RAG-based chatbot, and cyberpunk aesthetic.
+<h1 align="center">🚀 Sankalp Singh | AI Engineer Portfolio</h1>
 
-![Portfolio Preview](https://img.shields.io/badge/Built%20with-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)
-![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python)
-![LangChain](https://img.shields.io/badge/LangChain-AI-00ADD8?style=for-the-badge)
+<p align="center">
+  <strong>A stunning, modern portfolio featuring 3D animations, an AI-powered chatbot, and cosmic visuals.</strong>
+</p>
+
+<p align="center">
+  <a href="https://portfolio-pi-lac-11.vercel.app/">🌐 Live Demo</a> •
+  <a href="https://portfolio-9wvn.onrender.com/docs">📡 API Docs</a> •
+  <a href="https://linkedin.com/in/sankalp250">💼 LinkedIn</a>
+</p>
+
+---
 
 ## ✨ Features
 
-### 🎨 Modern UI/UX
-- **Cyberpunk Aesthetic**: Dark theme with neon accents, glassmorphism effects
-- **Smooth Animations**: Fade-ins, hover effects, and transitions
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
-- **3D Flip Cards**: Interactive project cards with hover animations
+| Feature | Description |
+|---------|-------------|
+| 🌌 **Cosmic 3D Background** | Immersive space-themed visuals with animated stars and shooting comets |
+| 🤖 **AI Chatbot** | RAG-powered assistant that answers questions about my skills and projects |
+| ⚡ **Smooth Animations** | Framer Motion powered transitions and micro-interactions |
+| 📱 **Fully Responsive** | Pixel-perfect on all devices from mobile to ultrawide |
+| 🎨 **Dark Theme** | Elegant dark mode with purple/blue gradient accents |
+| 📊 **Live GitHub Stats** | Real-time repository data and contribution metrics |
 
-### 🤖 AI-Powered Features
-- **RAG Chatbot**: Ask questions about projects and skills
-- **Smart Search**: Intelligent project filtering and categorization
-- **Auto-categorization**: Projects automatically categorized by domain
-
-### 📊 GitHub Integration
-- **Real-time Stats**: Live metrics from GitHub API
-- **Contribution Heatmap**: Visual representation of coding activity
-- **Language Distribution**: Interactive charts showing tech stack
-- **Project Analytics**: Stars, forks, and complexity scores
-
-### 🚀 Interactive Components
-- **Skills Radar Chart**: Animated visualization of technical skills
-- **Project Filters**: Filter by category, stars, language
-- **Search Functionality**: Find projects quickly
-- **Animated Counters**: Eye-catching stat displays
+---
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: Streamlit
-- **AI/ML**: LangChain, Groq/Google Gemini, ChromaDB
-- **Visualization**: Plotly, Pandas
-- **API**: GitHub REST API
-- **Styling**: Custom CSS with cyberpunk theme
+### Frontend
+- **React 19** - Modern UI library
+- **Three.js** & **React Three Fiber** - 3D graphics and animations
+- **Framer Motion** - Smooth animations and transitions
+- **Vite** - Lightning-fast build tool
 
-## 📋 Prerequisites
+### Backend
+- **FastAPI** - High-performance Python API
+- **LangChain** - RAG-based AI chatbot
+- **Groq** - Ultra-fast LLM inference
 
-- Python 3.9 or higher
-- GitHub Personal Access Token
-- Groq API Key or Google Gemini API Key
+### Deployment
+- **Vercel** - Frontend hosting with edge network
+- **Render** - Backend API hosting
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Clone the Repository
+### Prerequisites
+- Node.js 18+
+- Python 3.9+
+- Groq API Key ([Get one free](https://console.groq.com))
+
+### Frontend Setup
 
 ```bash
-git clone https://github.com/sankalp250/portfolio.git
-cd portfolio
+cd frontend
+npm install
+npm run dev
 ```
 
-### 2. Install Dependencies
+### Backend Setup
 
 ```bash
+cd backend
 pip install -r requirements.txt
+uvicorn api:app --reload
 ```
 
-### 3. Set Up Environment Variables
+### Environment Variables
 
-Create a `.env` file in the root directory:
-
+**Frontend** (`frontend/.env`):
 ```env
-GITHUB_TOKEN=your_github_token_here
-GITHUB_USERNAME=sankalp250
-GROQ_API_KEY=your_groq_api_key_here
-GOOGLE_API_KEY=your_google_api_key_here
+VITE_API_BASE_URL=http://localhost:8000
 ```
 
-### 4. Run the Application
-
-```bash
-streamlit run app.py
+**Backend** (`.env`):
+```env
+GROQ_API_KEY=your_groq_api_key
+GITHUB_TOKEN=your_github_token
 ```
 
-The application will open in your browser at `http://localhost:8501`
+---
 
 ## 📁 Project Structure
 
 ```
 portfolio/
-├── app.py                  # Main Streamlit application
-├── config.py               # Configuration and settings
-├── requirements.txt        # Python dependencies
-├── .env                    # Environment variables (not in git)
-├── .gitignore             # Git ignore file
+├── frontend/                # React application
+│   ├── src/
+│   │   ├── components/     # UI components
+│   │   ├── assets/         # Images and icons
+│   │   └── index.css       # Global styles
+│   └── package.json
 │
-├── components/            # UI Components
-│   ├── __init__.py
-│   ├── hero.py           # Hero section
-│   ├── about.py          # About section with skills
-│   ├── projects.py       # Projects showcase
-│   ├── github_stats.py   # GitHub statistics
-│   ├── chatbot.py        # AI chatbot interface
-│   └── contact.py        # Contact section
+├── backend/                 # FastAPI server
+│   ├── api.py              # API endpoints
+│   └── requirements.txt
 │
-├── utils/                # Utility modules
-│   ├── __init__.py
-│   ├── github_api.py     # GitHub API client
-│   └── data_processor.py # Data processing utilities
+├── ai/                      # AI modules
+│   └── rag_engine.py       # RAG chatbot engine
 │
-├── ai/                   # AI/RAG modules
-│   ├── __init__.py
-│   └── rag_engine.py     # RAG chatbot engine
-│
-├── styles/               # Custom styling
-│   └── custom.css        # Cyberpunk theme CSS
-│
-└── .streamlit/           # Streamlit configuration
-    └── config.toml       # Theme and server settings
+└── utils/                   # Utilities
+    └── github_api.py       # GitHub API client
 ```
-
-## 🎨 Customization
-
-### Update Personal Information
-
-Edit `config.py` to update your personal information:
-
-```python
-PERSONAL_INFO = {
-    "name": "Your Name",
-    "title": "Your Title",
-    "bio": "Your bio...",
-    "email": "your.email@example.com",
-    "linkedin": "https://linkedin.com/in/yourprofile",
-    "github": "https://github.com/yourusername",
-}
-```
-
-### Modify Skills
-
-Update the `SKILLS` dictionary in `config.py`:
-
-```python
-SKILLS = {
-    "Programming": ["Python", "JavaScript", "..."],
-    "ML/DL Frameworks": ["TensorFlow", "PyTorch", "..."],
-    # Add more categories...
-}
-```
-
-### Change Theme Colors
-
-Modify colors in `config.py`:
-
-```python
-COLORS = {
-    "primary": "#8B5CF6",      # Purple
-    "secondary": "#3B82F6",    # Blue
-    "accent": "#EC4899",       # Pink
-    # Customize more colors...
-}
-```
-
-## 🔑 API Keys Setup
-
-### GitHub Personal Access Token
-
-1. Go to GitHub Settings → Developer settings → Personal access tokens
-2. Generate new token with `repo` and `user` scopes
-3. Copy token to `.env` file
-
-### Groq API Key
-
-1. Visit [Groq Console](https://console.groq.com)
-2. Create an account and generate API key
-3. Add to `.env` file
-
-### Google Gemini API Key
-
-1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Create API key
-3. Add to `.env` file
-
-## 📊 Features Breakdown
-
-### Hero Section
-- Animated introduction with typing effect
-- Social media links with glassmorphism
-- Scroll indicator
-
-### About Section
-- Professional summary
-- Interactive skills radar chart
-- Categorized skill tags
-- Resume download button
-
-### Projects Section
-- 3D flip cards with hover effects
-- Filter by category, stars, language
-- Search functionality
-- Featured projects showcase
-- Tech stack visualization
-- Complexity scoring
-
-### GitHub Stats
-- Animated stat counters
-- Contribution heatmap
-- Language distribution chart
-- Profile overview
-
-### AI Chatbot
-- RAG-based responses
-- Context-aware answers
-- Chat history
-- Suggested questions
-- Streaming responses
-
-### Contact Section
-- Social media links
-- Email contact
-- Professional footer
-
-## 🚀 Deployment
-
-### Streamlit Cloud
-
-1. Push your code to GitHub
-2. Go to [Streamlit Cloud](https://streamlit.io/cloud)
-3. Connect your repository
-4. Add secrets in Streamlit Cloud dashboard
-5. Deploy!
-
-### Environment Variables in Streamlit Cloud
-
-Add these in Settings → Secrets:
-
-```toml
-GITHUB_TOKEN = "your_token"
-GITHUB_USERNAME = "your_username"
-GROQ_API_KEY = "your_groq_key"
-GOOGLE_API_KEY = "your_google_key"
-```
-
-## 🎯 Performance Tips
-
-- GitHub API caching reduces API calls
-- Vector store persists for faster chatbot initialization
-- Lazy loading of components
-- Optimized image sizes
-
-## 🐛 Troubleshooting
-
-### GitHub API Rate Limit
-- Use a Personal Access Token for higher limits (5000/hour vs 60/hour)
-- Caching is enabled by default
-
-### Chatbot Not Responding
-- Check API keys are correctly set
-- Ensure internet connection for LLM API calls
-- Initialize knowledge base may take a few seconds
-
-### CSS Not Loading
-- Ensure `styles/custom.css` exists
-- Check file path in `app.py`
-
-## 📝 License
-
-MIT License - feel free to use this for your own portfolio!
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-
-## 📧 Contact
-
-- **Email**: sankalp@example.com
-- **LinkedIn**: [linkedin.com/in/sankalp250](https://linkedin.com/in/sankalp250)
-- **GitHub**: [github.com/sankalp250](https://github.com/sankalp250)
-
-## 🌟 Acknowledgments
-
-- Built with [Streamlit](https://streamlit.io/)
-- AI powered by [LangChain](https://langchain.com/)
-- Charts by [Plotly](https://plotly.com/)
-- Icons from Unicode Emoji
 
 ---
 
-**Made with ❤️ and AI** | © 2024 Sankalp Singh
+## 🌐 Live Deployment
+
+| Service | URL |
+|---------|-----|
+| 🖥️ Frontend | [portfolio-pi-lac-11.vercel.app](https://portfolio-pi-lac-11.vercel.app/) |
+| 🔌 Backend API | [portfolio-9wvn.onrender.com](https://portfolio-9wvn.onrender.com) |
+| 📖 API Docs | [portfolio-9wvn.onrender.com/docs](https://portfolio-9wvn.onrender.com/docs) |
+
+---
+
+## 📧 Contact
+
+<p align="center">
+  <a href="https://linkedin.com/in/sankalp250"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
+  <a href="https://github.com/sankalp250"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+</p>
+
+---
+
+<p align="center">
+  <strong>Built with ❤️ using React, Three.js & Framer Motion</strong><br>
+  © 2024 Sankalp Singh
+</p>
